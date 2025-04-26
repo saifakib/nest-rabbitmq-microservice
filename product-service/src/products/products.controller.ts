@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { AuthGuard } from '../auth/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { CreateProductDto } from './dto/create-product.dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto/update-product.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('products')
 @ApiBearerAuth()

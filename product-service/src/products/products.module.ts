@@ -4,9 +4,9 @@ import { ProductsController } from './products.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthModule } from '../auth/auth.module';
 import { Product } from './product.entity';
 import { ProductSchema } from './product.schema';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
