@@ -1,0 +1,27 @@
+# Global ignores
+.env
+.env.*local
+node_modules
+dist
+build
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp
+.pnp.cjs
+.cache
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+.temp
+.tmp
+
+# Auth Service
+/auth-service/node_modules
+/auth-service/dist
+
+# Product Service
+/product-service/node_modules
+/product-service/dist
