@@ -7,16 +7,16 @@ import { Request } from 'express';
 
 @Injectable()
 export class JwtRefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly usersService: UsersService,
-  ) {
-    super({
-      jwtFromRequest: ExtractJwt.fromBodyField('refreshToken'),
-      secretOrKey: configService.get<string>('JWT_SECRET'),
-      passReqToCallback: true,
-    });
-  }
+    constructor(
+        private readonly configService: ConfigService,
+        private readonly usersService: UsersService,
+      ) {
+        super({
+          jwtFromRequest: ExtractJwt.fromBodyField('refreshToken'),
+          secretOrKey: configService.getOrThrow<string>('JWT_SECRET'),
+          passReqToCallback: true,
+        });
+      }
 
   async validate(req: Request, payload: any) {
     const refreshToken = req.body.refreshToken;

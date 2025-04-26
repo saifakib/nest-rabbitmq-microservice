@@ -1,4 +1,4 @@
-import { SchemaFactory } from '@nestjs/mongoose';
 import { User } from './user.entity';
+import { buildSchema } from '@typegoose/typegoose';
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const UserSchema = buildSchema(User);

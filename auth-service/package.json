@@ -31,6 +31,7 @@
     "@nestjs/swagger": "^11.1.5",
     "@nestjs/terminus": "^11.0.0",
     "@typegoose/typegoose": "^12.14.0",
+    "amqp-connection-manager": "^4.1.14",
     "amqplib": "^0.10.7",
     "bcryptjs": "^3.0.2",
     "class-transformer": "^0.5.1",

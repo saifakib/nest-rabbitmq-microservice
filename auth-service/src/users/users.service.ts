@@ -8,7 +8,7 @@ import * as bcrypt from 'bcryptjs';
 export class UsersService {
   constructor(@InjectModel(User.name) private readonly userModel: Model<User>) {}
 
-  async create(userData: Partial<User>): Promise<User> {
+  async create(userData: Omit<User, '_id' | 'createdAt' | 'updatedAt'>): Promise<User>{
     try {
       const hashedPassword = await bcrypt.hash(userData.password, 10);
       const createdUser = new this.userModel({ ...userData, password: hashedPassword });

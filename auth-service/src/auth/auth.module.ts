@@ -31,7 +31,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         useFactory: async (configService: ConfigService) => ({
           transport: Transport.RMQ,
           options: {
-            urls: [configService.get<string>('RABBITMQ_URL')],
+            urls: [configService.getOrThrow<string>('RABBITMQ_URL')],
             exchange: configService.get<string>('RABBITMQ_USER_CREATED_EXCHANGE'),
             routingKey: configService.get<string>('RABBITMQ_USER_CREATED_ROUTING_KEY'),
             queue: 'user_events_queue',

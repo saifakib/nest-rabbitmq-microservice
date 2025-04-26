@@ -14,7 +14,7 @@ export class User {
   password: string;
 
   @prop({ default: 'user' })
-  role: string;
+  role?: string;
 
   @prop({ default: Date.now() })
   createdAt?: Date;

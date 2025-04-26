@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"    # AMQP protocol (for services)
+      - "15672:15672"  # Management UI (browser access)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - microservices-network
+
+  mongo-auth:
+    image: mongo:6
+    container_name: mongo-auth
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_auth_data:/data/db
+    networks:
+      - microservices-network
+
+  mongo-product:
+    image: mongo:6
+    container_name: mongo-product
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_product_data:/data/db
+    networks:
+      - microservices-network
+
+volumes:
+  rabbitmq_data:
+  mongo_auth_data:
+  mongo_product_data:
+
+networks:
+  microservices-network:
+    driver: bridge

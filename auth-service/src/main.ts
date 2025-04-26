@@ -28,7 +28,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(port);
+  await app.listen(3000);
   console.log(`Auth Service running on port ${port}`);
 
   const microservice = await NestFactory.createMicroservice(AppModule, {
