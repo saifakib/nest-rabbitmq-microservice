@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   rabbitmq:
     image: rabbitmq:3-management
@@ -16,22 +14,57 @@ services:
       - microservices-network
 
   mongo-auth:
-    image: mongo:6
+    image: mongo:latest
     container_name: mongo-auth
+    restart: always
     ports:
       - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpass
     volumes:
       - mongo_auth_data:/data/db
     networks:
       - microservices-network
 
   mongo-product:
-    image: mongo:6
+    image: mongo:latest
     container_name: mongo-product
+    restart: always
     ports:
       - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpass
     volumes:
       - mongo_product_data:/data/db
+    networks:
+      - microservices-network
+
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.example-auth
+    depends_on:
+      - mongo-auth
+      - rabbitmq
+    networks:
+      - microservices-network
+
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env.example-product
+    depends_on:
+      - mongo-product
+      - rabbitmq
+      - auth-service
     networks:
       - microservices-network
 
