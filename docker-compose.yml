@@ -41,32 +41,32 @@ services:
     networks:
       - microservices-network
 
-  auth-service:
-    build: ./auth-service
-    container_name: auth-service
-    ports:
-      - "3000:3000"
-    env_file:
-      - .env.example-auth
-    depends_on:
-      - mongo-auth
-      - rabbitmq
-    networks:
-      - microservices-network
+  # auth-service:
+  #   build: ./auth-service
+  #   container_name: auth-service
+  #   ports:
+  #     - "3000:3000"
+  #   env_file:
+  #     - .env.example-auth
+  #   depends_on:
+  #     - mongo-auth
+  #     - rabbitmq
+  #   networks:
+  #     - microservices-network
 
-  product-service:
-    build: ./product-service
-    container_name: product-service
-    ports:
-      - "3001:3001"
-    env_file:
-      - .env.example-product
-    depends_on:
-      - mongo-product
-      - rabbitmq
-      - auth-service
-    networks:
-      - microservices-network
+  # product-service:
+  #   build: ./product-service
+  #   container_name: product-service
+  #   ports:
+  #     - "3001:3001"
+  #   env_file:
+  #     - .env.example-product
+  #   depends_on:
+  #     - mongo-product
+  #     - rabbitmq
+  #     - auth-service
+  #   networks:
+  #     - microservices-network
 
 volumes:
   rabbitmq_data:
