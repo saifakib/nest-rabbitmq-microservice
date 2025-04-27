@@ -8,6 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtRefreshTokenStrategy } from './strategies/jwt-refresh.strategy';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { RabbitmqSetupService } from './rabbitmq-setup.service';
 
 @Module({
   imports: [
@@ -32,8 +33,12 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           transport: Transport.RMQ,
           options: {
             urls: [configService.getOrThrow<string>('RABBITMQ_URL')],
-            exchange: configService.get<string>('RABBITMQ_USER_CREATED_EXCHANGE'),
-            routingKey: configService.get<string>('RABBITMQ_USER_CREATED_ROUTING_KEY'),
+            exchange: configService.get<string>(
+              'RABBITMQ_USER_CREATED_EXCHANGE',
+            ),
+            routingKey: configService.get<string>(
+              'RABBITMQ_USER_CREATED_ROUTING_KEY',
+            ),
             queue: 'user_events_queue',
             queueOptions: {
               durable: false,
@@ -43,7 +48,12 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       },
     ]),
   ],
-  providers: [AuthService, JwtStrategy, JwtRefreshTokenStrategy],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    JwtRefreshTokenStrategy,
+    RabbitmqSetupService,
+  ],
   controllers: [AuthController],
   exports: [AuthService, JwtModule],
 })
