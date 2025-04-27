@@ -31,7 +31,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(`${globalPrefix}/docs`, app, document);
 
-  await app.listen(3001);
+  await app.listen(port);
   console.log(`Product Service running on port ${port}`);
 
   const microservice = await NestFactory.createMicroservice(AppModule, {
