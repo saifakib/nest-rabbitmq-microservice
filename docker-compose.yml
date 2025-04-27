@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   rabbitmq:
     image: rabbitmq:3-management
@@ -12,6 +14,11 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - microservices-network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   mongo-auth:
     image: mongo:latest
@@ -22,10 +29,16 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: rootpass
+      MONGO_INITDB_DATABASE: auth-db
     volumes:
       - mongo_auth_data:/data/db
     networks:
       - microservices-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   mongo-product:
     image: mongo:latest
@@ -36,37 +49,46 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: rootpass
+      MONGO_INITDB_DATABASE: product-db
     volumes:
       - mongo_product_data:/data/db
     networks:
       - microservices-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-  # auth-service:
-  #   build: ./auth-service
-  #   container_name: auth-service
-  #   ports:
-  #     - "3000:3000"
-  #   env_file:
-  #     - .env.example-auth
-  #   depends_on:
-  #     - mongo-auth
-  #     - rabbitmq
-  #   networks:
-  #     - microservices-network
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.example-auth
+    depends_on:
+      mongo-auth:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - microservices-network
 
-  # product-service:
-  #   build: ./product-service
-  #   container_name: product-service
-  #   ports:
-  #     - "3001:3001"
-  #   env_file:
-  #     - .env.example-product
-  #   depends_on:
-  #     - mongo-product
-  #     - rabbitmq
-  #     - auth-service
-  #   networks:
-  #     - microservices-network
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env.example-product
+    depends_on:
+      mongo-product:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - microservices-network
 
 volumes:
   rabbitmq_data:

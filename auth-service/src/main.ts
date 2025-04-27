@@ -20,6 +20,9 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  
+  const globalPrefix = 'api/v1';
+  app.setGlobalPrefix(globalPrefix);
 
   const config = new DocumentBuilder()
     .setTitle('Auth Service API')
@@ -28,7 +31,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup(`${globalPrefix}/docs`, app, document);
 
   await app.listen(port);
   console.log(`Auth Service running on port ${port}`);
