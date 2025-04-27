@@ -9,15 +9,17 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT');
+  const port = configService.get<number>('PORT', 3000);
   const rabbitmqUrl = configService.get<string>('RABBITMQ_URL');
   const rabbitmqAuthQueue = configService.get<string>('RABBITMQ_AUTH_QUEUE');
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    transform: true,
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('Auth Service API')
@@ -28,7 +30,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3000);
+  await app.listen(port);
   console.log(`Auth Service running on port ${port}`);
 
   const microservice = await NestFactory.createMicroservice(AppModule, {
@@ -43,6 +45,8 @@ async function bootstrap() {
   });
 
   await microservice.listen();
-  console.log(`Auth Service Microservice is listening on queue ${rabbitmqAuthQueue}`);
+  console.log(
+    `Auth Service Microservice is listening on queue ${rabbitmqAuthQueue}`,
+  );
 }
 bootstrap();

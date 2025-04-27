@@ -7,13 +7,13 @@ export class RabbitmqSetupService implements OnModuleInit {
   constructor(private readonly configService: ConfigService) {}
 
   async onModuleInit() {
-    const rabbitmqUrl = this.configService.getOrThrow<string>('rabbitmqUrl');
+    const rabbitmqUrl = this.configService.getOrThrow<string>('RABBITMQ_URL');
     const exchange = this.configService.getOrThrow<string>(
-      'rabbitmqUserCreatedExchange',
+      'RABBITMQ_USER_CREATED_EXCHANGE',
     );
     const queue = 'user_events_queue';
     const routingKey = this.configService.getOrThrow<string>(
-      'rabbitmqUserCreatedRoutingKey',
+      'RABBITMQ_USER_CREATED_ROUTING_KEY',
     );
 
     const connection = await amqp.connect(rabbitmqUrl);
