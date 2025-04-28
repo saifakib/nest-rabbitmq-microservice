@@ -27,6 +27,7 @@ A demonstration of microservices architecture using NestJS and RabbitMQ for inte
 ## Services
 
 ### Auth Service
+
 - Handles user authentication and authorization
 - Manages JWT tokens (access & refresh)
 - Provides RPC endpoints for token validation
@@ -35,6 +36,7 @@ A demonstration of microservices architecture using NestJS and RabbitMQ for inte
 - Swagger UI: `http://localhost:3000/api/v1/docs`
 
 ### Product Service
+
 - Manages product catalog with owner-based permissions
 - Consumes Auth Service via RabbitMQ RPC
 - Subscribes to user events
@@ -44,6 +46,7 @@ A demonstration of microservices architecture using NestJS and RabbitMQ for inte
 ## Architecture
 
 The system follows a microservices pattern with:
+
 - REST APIs for external communication
 - RabbitMQ for internal service communication
 - MongoDB for data persistence
@@ -70,10 +73,11 @@ The system follows a microservices pattern with:
 ### Installation
 
 1.  **Clone the repository:**
-   ```bash
-   git clone https://github.com/saifakib/nest-rabbitmq-microservice.git
-   cd nest-rabbitmq-microservice
-   ```
+
+```bash
+git clone https://github.com/saifakib/nest-rabbitmq-microservice.git
+cd nest-rabbitmq-microservice
+```
 
 2.  **Run with Docker Compose:**
 
@@ -91,10 +95,9 @@ The system follows a microservices pattern with:
 
 ## API Documentation
 
- - Auth Service: `http://localhost:3000/api/v1/docs`
- - Product Service: `http://localhost:3001/api/v1/docs`
-
+- Auth Service: `http://localhost:3000/api/v1/docs`
+- Product Service: `http://localhost:3001/api/v1/docs`
 
 ## Postman Collection
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://your-postman-collection-link)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/join-team?invite_code=4b66f08acbe24a556147702d9c203646221f22eeb851bc86e0587661ad2b7541&target_code=81806d33ebfce34d81824bc8d9a56218)
