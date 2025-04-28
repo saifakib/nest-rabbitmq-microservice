@@ -100,4 +100,4 @@ cd nest-rabbitmq-microservice
 
 ## Postman Collection
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/join-team?invite_code=4b66f08acbe24a556147702d9c203646221f22eeb851bc86e0587661ad2b7541&target_code=81806d33ebfce34d81824bc8d9a56218)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://elements.getpostman.com/redirect?entityId=5843132-25748ac3-8b7e-4e98-90b5-1a48f08048d6&entityType=collection)
