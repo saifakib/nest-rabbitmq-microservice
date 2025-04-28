@@ -11,7 +11,9 @@ export class RabbitmqSetupService implements OnModuleInit {
     const exchange = this.configService.getOrThrow<string>(
       'RABBITMQ_USER_CREATED_EXCHANGE',
     );
-    const queue = 'user_events_queue';
+    const queue = this.configService.getOrThrow<string>(
+      'RABBITMQ_USER_EVENTS_QUEUE',
+    );
     const routingKey = this.configService.getOrThrow<string>(
       'RABBITMQ_USER_CREATED_ROUTING_KEY',
     );

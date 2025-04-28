@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { EventPattern, Payload } from '@nestjs/microservices';
 import { CreateProductDto } from './dto/create-product.dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto/update-product.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -30,19 +39,22 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto, @Req() req: any) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateProductDto: UpdateProductDto,
+    @Req() req: any,
+  ) {
     const decodedToken = req.user;
-    return this.productsService.update(id, updateProductDto, decodedToken.userId);
+    return this.productsService.update(
+      id,
+      updateProductDto,
+      decodedToken.userId,
+    );
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string, @Req() req: any) {
     const decodedToken = req.user;
     return this.productsService.remove(id, decodedToken.userId);
-  }
-
-  @EventPattern('user.created')
-  async handleUserCreated(@Payload() data: { userId: string; email: string; name: string }) {
-    console.log('Received user.created event in Product Service:', data);
   }
 }

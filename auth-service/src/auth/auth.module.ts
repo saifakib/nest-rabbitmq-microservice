@@ -39,7 +39,7 @@ import { RabbitmqSetupService } from './rabbitmq-setup.service';
             routingKey: configService.get<string>(
               'RABBITMQ_USER_CREATED_ROUTING_KEY',
             ),
-            queue: 'user_events_queue',
+            queue: configService.get<string>('RABBITMQ_USER_EVENTS_QUEUE'),
             queueOptions: {
               durable: false,
             },

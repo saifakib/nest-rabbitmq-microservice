@@ -21,7 +21,9 @@ import { AuthModule } from 'src/auth/auth.module';
           const queueName = configService.get<string>('RABBITMQ_AUTH_QUEUE');
 
           if (!rabbitUrl || !queueName) {
-            throw new Error('Missing RABBITMQ_URL or RABBITMQ_AUTH_QUEUE in environment variables');
+            throw new Error(
+              'Missing RABBITMQ_URL or RABBITMQ_AUTH_QUEUE in environment variables',
+            );
           }
 
           return {
@@ -32,32 +34,6 @@ import { AuthModule } from 'src/auth/auth.module';
               queueOptions: {
                 durable: false,
               },
-            },
-          };
-        },
-      },
-      {
-        name: 'PRODUCT_SERVICE_USER_EVENTS',
-        imports: [ConfigModule],
-        inject: [ConfigService],
-        useFactory: async (configService: ConfigService) => {
-          const rabbitUrl = configService.get<string>('RABBITMQ_URL');
-
-          if (!rabbitUrl) {
-            throw new Error('Missing RABBITMQ_URL in environment variables');
-          }
-
-          return {
-            transport: Transport.RMQ,
-            options: {
-              urls: [rabbitUrl],
-              queue: 'product_service_user_events_queue',
-              queueOptions: {
-                durable: false,
-              },
-              exchange: 'user.events',
-              routingKey: 'user.created',
-              exchangeType: 'fanout',
             },
           };
         },

@@ -8,4 +8,5 @@ export default () => ({
   rabbitmqAuthQueue: process.env.RABBITMQ_AUTH_QUEUE,
   rabbitmqUserCreatedExchange: process.env.RABBITMQ_USER_CREATED_EXCHANGE,
   rabbitmqUserCreatedRoutingKey: process.env.RABBITMQ_USER_CREATED_ROUTING_KEY,
+  rabbitmqUserEventsQueue: process.env.RABBITMQ_USER_EVENTS_QUEUE,
 });

@@ -9,7 +9,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT', 3001);
-  const rabbitmqUrl = configService.get<string>('RABBITMQ_URL');
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -37,8 +36,8 @@ async function bootstrap() {
   const microservice = await NestFactory.createMicroservice(AppModule, {
     transport: Transport.RMQ,
     options: {
-      urls: [rabbitmqUrl],
-      queue: 'product_service_user_events_queue',
+      urls: [configService.get<string>('RABBITMQ_URL')],
+      queue: configService.get<string>('RABBITMQ_USER_EVENTS_QUEUE'),
       queueOptions: {
         durable: false,
       },

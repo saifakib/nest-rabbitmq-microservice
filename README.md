@@ -39,7 +39,7 @@ A demonstration of microservices architecture using NestJS and RabbitMQ for inte
 
 - Manages product catalog with owner-based permissions
 - Consumes Auth Service via RabbitMQ RPC
-- Subscribes to user events
+- Subscribes to user events (Note: When user register, log view in product service terminal)
 - REST API: `http://localhost:3001/api/v1`
 - Swagger UI: `http://localhost:3001/api/v1/docs`
 
